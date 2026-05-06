@@ -1,0 +1,24 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "typst-manager"
+version = "0.1.0"
+description = "Manage Typst templates and documents from the command line"
+readme = "README.md"
+license = { text = "MIT" }
+requires-python = ">=3.9"
+dependencies = [
+    "tomli>=2.0; python_version < '3.11'",
+]
+
+[project.scripts]
+typst-manager = "typst_manager.cli:main"
+
+[project.optional-dependencies]
+dev = ["pytest>=7", "pytest-cov"]
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["typst_manager*"]
