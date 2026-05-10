@@ -1,0 +1,11 @@
+# GitHub Code Owners
+# https://docs.github.com/en/repositories/managing-your-repositorys-settings-and-security/customizing-your-repository/about-code-owners
+#
+# Every file is owned by @orvizz, which means a review from @orvizz is
+# required to merge any pull request when the protected branches enforce
+# "Require review from Code Owners".
+#
+# To add area-specific owners later, list them on a more specific path
+# above the catch-all. Last matching line wins per file.
+
+*    @orvizz
