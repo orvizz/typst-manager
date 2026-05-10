@@ -1,0 +1,90 @@
+name: Bug report
+description: Report something that does not work as expected.
+title: "[bug] <short description>"
+labels: ["bug", "needs triage"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for taking the time to file a bug report. The more
+        precise the reproduction, the faster we can fix it.
+
+  - type: textarea
+    id: summary
+    attributes:
+      label: What happened?
+      description: A clear, concise description of the bug.
+      placeholder: |
+        When I run `typst-manager template create foo --from ./bar`, the
+        command exits 0 but the template folder is empty.
+    validations:
+      required: true
+
+  - type: textarea
+    id: expected
+    attributes:
+      label: What did you expect to happen?
+      placeholder: |
+        The template folder should contain a copy of the files from
+        ./bar (excluding .pdf and meta.toml).
+    validations:
+      required: true
+
+  - type: textarea
+    id: reproduction
+    attributes:
+      label: Steps to reproduce
+      description: Minimal commands the maintainer can copy and paste.
+      placeholder: |
+        1. mkdir bar && touch bar/main.typ
+        2. typst-manager template create foo --from ./bar
+        3. ls -la <data-dir>/templates/foo/
+      render: bash
+    validations:
+      required: true
+
+  - type: input
+    id: version
+    attributes:
+      label: typst-manager version
+      description: Output of `pip show typst-manager` or the git commit if from source.
+      placeholder: "0.2.0"
+    validations:
+      required: true
+
+  - type: dropdown
+    id: os
+    attributes:
+      label: Operating system
+      options:
+        - Linux
+        - macOS
+        - Windows
+        - Other (please specify in the description)
+    validations:
+      required: true
+
+  - type: input
+    id: python
+    attributes:
+      label: Python version
+      placeholder: "3.11.7"
+    validations:
+      required: true
+
+  - type: textarea
+    id: logs
+    attributes:
+      label: Relevant logs / output
+      description: Paste any error output here. It will be rendered as a code block.
+      render: shell
+
+  - type: checkboxes
+    id: checks
+    attributes:
+      label: Checklist
+      options:
+        - label: I have searched existing issues to make sure this is not a duplicate.
+          required: true
+        - label: I am running the latest released version (or a recent commit on `main`).
+          required: false

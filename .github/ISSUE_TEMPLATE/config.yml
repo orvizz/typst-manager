@@ -1,0 +1,14 @@
+# Disable the "Open a blank issue" link so people pick a template.
+blank_issues_enabled: false
+
+contact_links:
+  - name: Security vulnerability
+    url: https://github.com/orvizz/typst-manager/security/advisories/new
+    about: |
+      Please do NOT open a public issue for security problems.
+      Use GitHub's private vulnerability reporting instead.
+  - name: Question or discussion
+    url: https://github.com/orvizz/typst-manager/discussions
+    about: |
+      Have a question, an idea you want to think through, or want to
+      share how you use typst-manager? Start a Discussion.
