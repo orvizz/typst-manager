@@ -6,7 +6,7 @@ Schema:
   editor = "system"     # system | vim | nvim | code
 
   [user]
-  author = ""           # optional, for the user's reference
+  author = "orvizz"           # optional, for the user's reference
 """
 import os
 import sys

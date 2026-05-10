@@ -28,6 +28,12 @@ def run_create(args, cfg: Config) -> int:
             print(f"  Location: {t.path}")
             _open(t.path, cfg)
 
+        elif Path(from_arg).is_dir():
+            # From an existing document directory
+            t = store.create_from_dir(name, Path(from_arg), description)
+            print(f"✓ Template '{t.name}' created from directory: {from_arg}")
+            print(f"  Location: {t.path}")
+
         elif Path(from_arg).exists() and Path(from_arg).suffix == ".typ":
             # From an existing .typ file
             t = store.create_from_file(name, Path(from_arg), description)

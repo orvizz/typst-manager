@@ -1,0 +1,263 @@
+.\" typst-manager.1 — man page for typst-manager
+.\" Generated for typst-manager 0.2.0
+.TH TYPST\-MANAGER 1 "2025" "typst\-manager 0.2.0" "User Commands"
+.
+.SH NAME
+typst\-manager \- manage Typst templates and documents from the command line
+.
+.SH SYNOPSIS
+.nf
+.B typst\-manager new
+.I name
+.B \-\-template
+.I name
+.RB [ \-\-out
+.IR dir ]
+
+.B typst\-manager template create
+.I name
+.RB [ \-\-from
+.IR source ]
+.RB [ \-d
+.IR description ]
+
+.B typst\-manager template edit
+.I name
+
+.B typst\-manager template rename
+.I name
+.I new\-name
+
+.B typst\-manager template delete
+.I name
+.RB [ \-\-yes ]
+
+.B typst\-manager template list
+
+.B typst\-manager config show
+
+.B typst\-manager config set
+.I key
+.I value
+
+.B typst\-manager man
+.fi
+.
+.SH DESCRIPTION
+.B typst\-manager
+is a command\-line tool for managing a personal library of
+.BR Typst (1)
+templates and spinning up new documents from them.
+Templates are plain folders on disk — no database, no lock\-in.
+.PP
+Each template contains at least a
+.B main.typ
+entry point plus any supporting files.
+When you create a new document with
+.BR "typst\-manager new" ,
+the template folder is copied into a self\-contained project directory
+that you can edit freely; future changes to the template do not affect
+existing documents.
+.
+.SH COMMANDS
+.
+.SS "typst\-manager new"
+Create a new document folder from a template.
+.PP
+.RS 4
+.TP
+.I name
+Name of the new document. A folder with this name is created inside the
+current directory (or inside
+.I dir
+if
+.B \-\-out
+is given).
+.TP
+.BR \-t ", " \-\-template " " \fIname\fR
+Name of the template to use (required).
+.TP
+.BR \-o ", " \-\-out " " \fIdir\fR
+Parent directory for the new document folder. Defaults to the current
+working directory.
+.RE
+.
+.SS "typst\-manager template create"
+Create a new template. Four modes are available depending on
+.BR \-\-from :
+.PP
+.RS 4
+.TP
+.B (no \-\-from)
+Start from a ready\-to\-use boilerplate:
+.BR main.typ ,
+.BR template.typ ,
+.BR metadata.typ ,
+and
+.BR sources.bib .
+The template folder is opened in the configured editor afterwards.
+.TP
+.BI \-\-from " dir"
+Save an existing document directory as a template.
+All files are copied except compiled
+.B .pdf
+artefacts and any existing
+.BR meta.toml .
+The directory must contain a
+.B main.typ
+file.
+.TP
+.BI \-\-from " file.typ"
+Import a single
+.B .typ
+file as the template's
+.BR main.typ .
+.TP
+.BI \-\-from " template\-name"
+Duplicate an existing template as the starting point.
+.RE
+.PP
+Options:
+.RS 4
+.TP
+.BR \-d ", " \-\-description " " \fItext\fR
+Short description shown in
+.BR "template list" .
+.RE
+.
+.SS "typst\-manager template edit"
+Open the template folder in the configured editor.
+.
+.SS "typst\-manager template rename"
+Rename a template. The folder is moved; its contents are unchanged.
+.
+.SS "typst\-manager template delete"
+Permanently delete a template folder.
+A confirmation prompt is shown unless
+.B \-\-yes
+is given.
+.
+.SS "typst\-manager template list"
+Print all templates with their names and descriptions.
+.
+.SS "typst\-manager config show"
+Print the active configuration and the location of the config file.
+.
+.SS "typst\-manager config set"
+Change a configuration value.
+.PP
+.RS 4
+.TP
+.B editor
+Editor used to open template folders.
+Accepted values:
+.B system
+(OS default),
+.BR code ,
+.BR vim ,
+.BR nvim .
+Default:
+.BR system .
+.TP
+.B author
+Your name, stored for reference.
+.RE
+.
+.SS "typst\-manager man"
+Display this manual.
+On Linux and macOS the man page is opened with
+.BR man (1).
+On Windows it is printed to the terminal.
+.
+.SH FILES
+.TP
+.B Linux
+\fI~/.local/share/typst\-manager/\fR
+.TP
+.B macOS
+\fI~/Library/Application Support/typst\-manager/\fR
+.TP
+.B Windows
+\fI%APPDATA%\\typst\-manager\\\fR
+.PP
+Override the data directory by setting the environment variable
+.BR TYPST_MANAGER_HOME .
+.PP
+The directory layout is:
+.PP
+.RS 4
+.nf
+<data\-dir>/
+├── config.toml
+└── templates/
+    └── <name>/
+        ├── main.typ        required entry point
+        ├── meta.toml       name and description
+        └── ...             any other template files
+.fi
+.RE
+.
+.SH ENVIRONMENT
+.TP
+.B TYPST_MANAGER_HOME
+Override the default data directory.
+.TP
+.B EDITOR
+Used as a fallback if no editor is set in
+.BR config.toml .
+.
+.SH EXAMPLES
+Create a blank template and edit it:
+.PP
+.RS 4
+.nf
+typst\-manager template create article
+.fi
+.RE
+.PP
+Save a document you are working on as a template:
+.PP
+.RS 4
+.nf
+typst\-manager template create letter \-\-from ~/docs/my\-letter/
+.fi
+.RE
+.PP
+Start a new document from the
+.I article
+template:
+.PP
+.RS 4
+.nf
+typst\-manager new quarterly\-report \-\-template article
+.fi
+.RE
+.PP
+List all available templates:
+.PP
+.RS 4
+.nf
+typst\-manager template list
+.fi
+.RE
+.PP
+Change the default editor to Neovim:
+.PP
+.RS 4
+.nf
+typst\-manager config set editor nvim
+.fi
+.RE
+.
+.SH SEE ALSO
+.BR typst (1),
+.BR man (1)
+.PP
+Documentation and source code:
+.I https://github.com/orvizz/typst\-manager
+.
+.SH AUTHORS
+typst\-manager contributors.
+.PP
+Report bugs at:
+.I https://github.com/orvizz/typst\-manager/issues
